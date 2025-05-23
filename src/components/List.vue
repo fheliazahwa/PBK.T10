@@ -10,9 +10,26 @@
         <img class="produk-logo" :src="produk.gambar" :alt="'Logo ' + produk.nama" />
         <h3>{{ produk.nama }}</h3>
         <p>{{ produk.deskripsi }}</p>
-        <button @click="$router.push({ name: 'ProdukDetail', params: { id: i + 1 } })">
-          Lihat Detail
-        </button>
+        <div class="button-group">
+          <button @click="$router.push({ name: 'ProdukDetail', params: { id: i + 1 } })">
+            Lihat Detail
+          </button>
+          <button @click="konfirmasiHapus(i)">
+            Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Konfirmasi -->
+    <div v-if="showConfirm" class="modal-overlay">
+      <div class="modal-content">
+        <h3>Konfirmasi Hapus</h3>
+        <p>Apakah Anda yakin ingin menghapus produk ini?</p>
+        <div class="modal-buttons">
+          <button @click="showConfirm = false">Batal</button>
+          <button class="hapus" @click="hapusProduk(indexToDelete)">Hapus</button>
+        </div>
       </div>
     </div>
   </div>
@@ -33,7 +50,19 @@ export default {
         { nama: 'Lose Powder', deskripsi: 'Memberikan efek blur pada wajah.', gambar: produk2 },
         { nama: 'Eyeshadow', deskripsi: 'Mempercantik Pada Kelopak Mata.', gambar: produk3 },
         { nama: 'Micellar Water', deskripsi: 'Membersihkan Kotoran Pada Wajah.', gambar: produk4 }
-      ]
+      ],
+      showConfirm: false,
+      indexToDelete: null
+    }
+  },
+  methods: {
+    konfirmasiHapus(index) {
+      this.indexToDelete = index
+      this.showConfirm = true
+    },
+    hapusProduk(index) {
+      this.produkList.splice(index, 1)
+      this.showConfirm = false
     }
   }
 }
@@ -105,7 +134,14 @@ export default {
   margin-bottom: 1rem;
 }
 
-.produk-card button {
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button-group button {
   background-color: #8e44ad;
   color: white;
   border: none;
@@ -116,7 +152,57 @@ export default {
   transition: background-color 0.3s ease;
 }
 
-.produk-card button:hover {
+.button-group button:hover {
   background-color: #732d91;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-buttons button.hapus {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.modal-buttons button.hapus:hover {
+  background-color: #c0392b;
+}
+
+.modal-buttons button:not(.hapus) {
+  background-color: #ccc;
+}
+
+.modal-buttons button:not(.hapus):hover {
+  background-color: #bbb;
 }
 </style>
