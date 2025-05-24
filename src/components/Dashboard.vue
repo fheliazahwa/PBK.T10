@@ -2,8 +2,8 @@
   <div class="dashboard-container">
     <div class="card">
       <h2>Dashboard</h2>
-      <p>Selamat datang di <strong>Dashboard Toko Kosmetik</strong> Toko Kosmetik.</p>
-      <p>Kelola produk, transaksi, dan laporan dengan mudah dari satu tempat.</p>
+      <p>Selamat datang di <strong> Toko Kosmetik</strong>.</p>
+      <p>Selamat Berbelanja di Toko Kami.</p>
     </div>
   </div>
 </template>
